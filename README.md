@@ -4,4 +4,4 @@ API RESTful escrita em Node.js
 
 ## Tópicos
 
-- [Configurando linter](https://github.com/xl-solutions/denis-bernardo/rest-api/blob/master/docs/lint.md)
+- [Configurando linter](https://github.com/denis-bernardo/rest-api/blob/master/docs/lint.md)
