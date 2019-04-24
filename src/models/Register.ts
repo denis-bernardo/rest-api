@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm'
 import { Business } from './Business'
 import { User } from './User'
-import { CashFlow } from './CashFlow';
+import { CashFlow } from './CashFlow'
 
 @Entity()
 export class Register {

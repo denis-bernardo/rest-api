@@ -4,7 +4,7 @@ import { Payment } from './Payment'
 import { Professional } from './Professional'
 import { Business } from './Business'
 import { Customer } from './Customer'
-import { OrderItem } from './OrderItem';
+import { OrderItem } from './OrderItem'
 
 @Entity()
 export class Order {

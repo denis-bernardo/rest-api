@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm'
-import { Business } from './Business';
-import { Service } from './Service';
+import { Business } from './Business'
+import { Service } from './Service'
 
 @Entity()
 export class ServiceDetail {

@@ -1,11 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryColumn } from 'typeorm'
 
 @Entity()
 export class UserGroupHasUserResource {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
   public userGroupId: number
 
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
   public userResourceId: number
 
   @Column('boolean')

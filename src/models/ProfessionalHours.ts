@@ -7,8 +7,7 @@ export class ProfessionalHours {
   public id: number
 
   @Column({
-    type: 'int',
-    length: 1
+    type: 'int'
   })
   public weekDay: number
 

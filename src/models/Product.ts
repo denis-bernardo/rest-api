@@ -1,8 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm'
 import { Business } from './Business'
-import { ProductBrand } from './ProductBrand';
-import { ProductCategory } from './ProductCategory';
-import { OrderItem } from './OrderItem';
+import { ProductBrand } from './ProductBrand'
+import { ProductCategory } from './ProductCategory'
+import { OrderItem } from './OrderItem'
 
 @Entity()
 export class Product {
@@ -35,8 +35,7 @@ export class Product {
   public image?: string
 
   @Column({
-    type: 'int',
-    length: 11
+    type: 'int'
   })
   public quantity: number
 

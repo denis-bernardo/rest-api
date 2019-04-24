@@ -1,8 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm'
-import { Business } from './Business';
-import { ServiceCategory } from './ServiceCategory';
-import { OrderItem } from './OrderItem';
-import { ServiceDetail } from './ServiceDetail';
+import { Business } from './Business'
+import { ServiceCategory } from './ServiceCategory'
+import { OrderItem } from './OrderItem'
+import { ServiceDetail } from './ServiceDetail'
 
 @Entity()
 export class Service {

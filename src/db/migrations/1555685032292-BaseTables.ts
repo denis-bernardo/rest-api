@@ -3,7 +3,7 @@ import { MigrationInterface, QueryRunner } from 'typeorm'
 export class BaseTables1555685032292 implements MigrationInterface {
   public async up (queryRunner: QueryRunner) {
     await queryRunner.query(`CREATE TABLE IF NOT EXISTS \`business_type\` (
-  \`id\` INT(11) UNSIGNED NOT NULL,
+  \`id\` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   \`name\` VARCHAR(100) NOT NULL,
   \`slug\` VARCHAR(150) NOT NULL,
   \`created_at\` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
@@ -262,6 +262,7 @@ ENGINE = InnoDB;`)
     await queryRunner.query(`CREATE TABLE IF NOT EXISTS \`service_category\` (
   \`id\` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   \`name\` VARCHAR(100) NOT NULL,
+  \`slug\` VARCHAR(150) NOT NULL,
   \`preset\` TINYINT(1) NULL DEFAULT 0,
   \`created_at\` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   \`updated_at\` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,

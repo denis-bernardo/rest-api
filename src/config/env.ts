@@ -1,3 +1,3 @@
-import * as dotenv from 'dotenv';
+import * as dotenv from 'dotenv'
 
-dotenv.config({ path: `${__dirname}/../../.env` });
+dotenv.config({ path: `${__dirname}/../../.env` })

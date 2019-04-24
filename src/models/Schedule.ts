@@ -1,8 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm'
 import { Business } from './Business'
 import { Professional } from './Professional'
-import { Customer } from './Customer';
-import { ScheduleStatus } from './ScheduleStatus';
+import { Customer } from './Customer'
+import { ScheduleStatus } from './ScheduleStatus'
 
 @Entity()
 export class Schedule {
@@ -15,8 +15,7 @@ export class Schedule {
   public scheduledTo: Date
 
   @Column({
-    type: 'int',
-    length: 1
+    type: 'int'
   })
   public weekDay: number
 

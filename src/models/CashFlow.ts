@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateCol
 import { CashFlowType } from './CashFlowType'
 import { CashFlowCategory } from './CashFlowCategory'
 import { Payment } from './Payment'
-import { Register } from './Register';
+import { Register } from './Register'
 
 @Entity()
 export class CashFlow {
