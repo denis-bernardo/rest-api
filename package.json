@@ -5,6 +5,7 @@
   "scripts": {
     "compile": "tsc",
     "dev": "nodemon",
+    "lint": "eslint --fix --ext .ts src",
     "migrate": "ts-node ./node_modules/typeorm/cli.js migration:run",
     "migrate-revert": "ts-node ./node_modules/typeorm/cli.js migration:revert",
     "start": "ts-node --files src/server.ts",
