@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
 
 @Entity()
-export class ScheduleHasService {
+export default class ScheduleHasService {
   @PrimaryGeneratedColumn('uuid')
   public scheduleId: string
 

@@ -1,11 +1,11 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm'
-import { Business } from './Business'
-import { Professional } from './Professional'
-import { Customer } from './Customer'
-import { ScheduleStatus } from './ScheduleStatus'
+import Business from './Business'
+import Professional from './Professional'
+import Customer from './Customer'
+import ScheduleStatus from './ScheduleStatus'
 
 @Entity()
-export class Schedule {
+export default class Schedule {
   @PrimaryGeneratedColumn('uuid')
   public id: string
 

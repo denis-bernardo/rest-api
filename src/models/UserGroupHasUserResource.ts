@@ -1,7 +1,7 @@
 import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryColumn } from 'typeorm'
 
 @Entity()
-export class UserGroupHasUserResource {
+export default class UserGroupHasUserResource {
   @PrimaryColumn()
   public userGroupId: number
 

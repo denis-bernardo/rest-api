@@ -1,8 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm'
-import { Professional } from './Professional'
+import Professional from './Professional'
 
 @Entity()
-export class ProfessionalHours {
+export default class ProfessionalHours {
   @PrimaryGeneratedColumn()
   public id: number
 

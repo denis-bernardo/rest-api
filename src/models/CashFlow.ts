@@ -1,11 +1,11 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm'
-import { CashFlowType } from './CashFlowType'
-import { CashFlowCategory } from './CashFlowCategory'
-import { Payment } from './Payment'
-import { Register } from './Register'
+import CashFlowType from './CashFlowType'
+import CashFlowCategory from './CashFlowCategory'
+import Payment from './Payment'
+import Register from './Register'
 
 @Entity()
-export class CashFlow {
+export default class CashFlow {
   @PrimaryGeneratedColumn()
   public id: number
 

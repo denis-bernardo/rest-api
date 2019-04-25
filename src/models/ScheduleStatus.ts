@@ -1,8 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm'
-import { Schedule } from './Schedule'
+import Schedule from './Schedule'
 
 @Entity()
-export class ScheduleStatus {
+export default class ScheduleStatus {
   @PrimaryGeneratedColumn()
   public id: number
 
