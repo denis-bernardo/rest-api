@@ -1,10 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm'
-import { Order } from './Order'
-import { Product } from './Product'
-import { Service } from './Service'
+import Order from './Order'
+import Product from './Product'
+import Service from './Service'
 
 @Entity()
-export class OrderItem {
+export default class OrderItem {
   @PrimaryGeneratedColumn()
   public id: number
 

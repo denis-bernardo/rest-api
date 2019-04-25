@@ -1,10 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany, ManyToMany, JoinTable } from 'typeorm'
-import { Business } from './Business'
-import { User } from './User'
-import { UserResource } from './UserResource'
+import Business from './Business'
+import User from './User'
+import UserResource from './UserResource'
 
 @Entity()
-export class UserGroup {
+export default class UserGroup {
   @PrimaryGeneratedColumn()
   public id: number
 

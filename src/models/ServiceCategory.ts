@@ -1,9 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm'
-import { Business } from './Business'
-import { Service } from './Service'
+import Business from './Business'
+import Service from './Service'
 
 @Entity()
-export class ServiceCategory {
+export default class ServiceCategory {
   @PrimaryGeneratedColumn()
   public id: number
 

@@ -1,11 +1,11 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToOne, OneToMany } from 'typeorm'
-import { Address } from './Address'
-import { User } from './User'
-import { Order } from './Order'
-import { Schedule } from './Schedule'
+import Address from './Address'
+import User from './User'
+import Order from './Order'
+import Schedule from './Schedule'
 
 @Entity()
-export class Customer {
+export default class Customer {
   @PrimaryGeneratedColumn('uuid')
   public id: string
 

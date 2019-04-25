@@ -1,8 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm'
-import { Customer } from './Customer'
+import Customer from './Customer'
+import Business from './Business'
 
 @Entity()
-export class Address {
+export default class Address {
   @PrimaryGeneratedColumn()
   public id: number
 
@@ -50,16 +51,24 @@ export class Address {
 
   @Column({
     type: 'varchar',
-    length: 8
+    length: 8,
+    name: 'zip_code'
   })
   public zipCode?: string
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    name: 'created_at'
+  })
   public createdAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    name: 'updated_at'
+  })
   public updatedAt: Date
 
   @OneToMany(() => Customer, customer => customer.address)
   public customers: Customer[]
+
+  @OneToMany(() => Business, business => business.address)
+  public businesses: Business[]
 }

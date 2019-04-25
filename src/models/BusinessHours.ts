@@ -1,8 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm'
-import { Business } from './Business'
+import Business from './Business'
 
 @Entity()
-export class BusinessHours {
+export default class BusinessHours {
   @PrimaryGeneratedColumn()
   public id: number
 

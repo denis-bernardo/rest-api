@@ -1,11 +1,11 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm'
-import { Business } from './Business'
-import { Order } from './Order'
-import { CashFlow } from './CashFlow'
-import { PaymentDetail } from './PaymentDetail'
+import Business from './Business'
+import Order from './Order'
+import CashFlow from './CashFlow'
+import PaymentDetail from './PaymentDetail'
 
 @Entity()
-export class Payment {
+export default class Payment {
   @PrimaryGeneratedColumn()
   public id: number
 

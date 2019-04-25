@@ -1,24 +1,24 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn, OneToMany, ManyToMany, JoinTable } from 'typeorm'
-import { BusinessType } from './BusinessType'
-import { Address } from './Address'
-import { Plan } from './Plan'
-import { BusinessHours } from './BusinessHours'
-import { UserGroup } from './UserGroup'
-import { Professional } from './Professional'
-import { ServiceCategory } from './ServiceCategory'
-import { Service } from './Service'
-import { ProductBrand } from './ProductBrand'
-import { ProductCategory } from './ProductCategory'
-import { Product } from './Product'
-import { Payment } from './Payment'
-import { Order } from './Order'
-import { Register } from './Register'
-import { Schedule } from './Schedule'
-import { ServiceDetail } from './ServiceDetail'
-import { PaymentDetail } from './PaymentDetail'
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn, OneToMany, ManyToOne } from 'typeorm'
+import BusinessType from './BusinessType'
+import Address from './Address'
+import Plan from './Plan'
+import BusinessHours from './BusinessHours'
+import UserGroup from './UserGroup'
+import Professional from './Professional'
+import ServiceCategory from './ServiceCategory'
+import Service from './Service'
+import ProductBrand from './ProductBrand'
+import ProductCategory from './ProductCategory'
+import Product from './Product'
+import Payment from './Payment'
+import Order from './Order'
+import Register from './Register'
+import Schedule from './Schedule'
+import ServiceDetail from './ServiceDetail'
+import PaymentDetail from './PaymentDetail'
 
 @Entity()
-export class Business {
+export default class Business {
   @PrimaryGeneratedColumn('uuid')
   public id: string
 
@@ -30,19 +30,22 @@ export class Business {
 
   @Column({
     type: 'varchar',
-    length: 255
+    length: 255,
+    name: 'company_name'
   })
   public companyName?: string
 
   @Column({
     type: 'varchar',
-    length: 11
+    length: 11,
+    name: 'phone_number'
   })
   public phoneNumber?: string
 
   @Column({
     type: 'varchar',
-    length: 11
+    length: 11,
+    name: 'landline_number'
   })
   public landlineNumber?: string
 
@@ -70,21 +73,26 @@ export class Business {
   public description?: string
 
   @Column({
-    type: 'datetime'
+    type: 'datetime',
+    name: 'deactivated_at'
   })
   public deactivatedAt?: Date
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    name: 'created_at'
+  })
   public createdAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    name: 'updated_at'
+  })
   public updatedAt: Date
 
   @OneToOne(() => BusinessType)
   @JoinColumn({ name: 'business_type_id' })
   public businessType: BusinessType
 
-  @OneToOne(() => Address)
+  @ManyToOne(() => Address, (address) => address.businesses)
   @JoinColumn({ name: 'address_id' })
   public address: Address
 

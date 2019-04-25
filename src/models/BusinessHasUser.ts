@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity()
-export class BusinessHasUser {
+export default class BusinessHasUser {
   @PrimaryGeneratedColumn('uuid')
   public businessId: string
 

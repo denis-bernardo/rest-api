@@ -7,7 +7,7 @@ import {
 } from 'typeorm'
 
 @Entity()
-export class Plan {
+export default class Plan {
   @PrimaryGeneratedColumn()
   public id: number
 
@@ -26,13 +26,18 @@ export class Plan {
 
   @Column({
     type: 'varchar',
-    length: 45
+    length: 45,
+    name: 'external_id'
   })
   public externalId?: string
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    name: 'created_at'
+  })
   public createdAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    name: 'updated_at'
+  })
   public updatedAt: Date
 }

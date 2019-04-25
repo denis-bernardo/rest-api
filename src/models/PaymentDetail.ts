@@ -1,9 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm'
-import { Business } from './Business'
-import { Payment } from './Payment'
+import Business from './Business'
+import Payment from './Payment'
 
 @Entity()
-export class PaymentDetail {
+export default class PaymentDetail {
   @PrimaryGeneratedColumn()
   public id: number
 

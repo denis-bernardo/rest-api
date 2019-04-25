@@ -1,9 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm'
-import { UserGroup } from './UserGroup'
-import { Register } from './Register'
+import UserGroup from './UserGroup'
+import Register from './Register'
 
 @Entity()
-export class User {
+export default class User {
   @PrimaryGeneratedColumn('uuid')
   public id: string
 

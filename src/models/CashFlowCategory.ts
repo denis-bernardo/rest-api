@@ -1,8 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm'
-import { CashFlow } from './CashFlow'
+import CashFlow from './CashFlow'
 
 @Entity()
-export class CashFlowCategory {
+export default class CashFlowCategory {
   @PrimaryGeneratedColumn()
   public id: number
 

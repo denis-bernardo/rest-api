@@ -1,11 +1,11 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm'
-import { Business } from './Business'
-import { ProductBrand } from './ProductBrand'
-import { ProductCategory } from './ProductCategory'
-import { OrderItem } from './OrderItem'
+import Business from './Business'
+import ProductBrand from './ProductBrand'
+import ProductCategory from './ProductCategory'
+import OrderItem from './OrderItem'
 
 @Entity()
-export class Product {
+export default class Product {
   @PrimaryGeneratedColumn()
   public id: number
 
