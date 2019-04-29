@@ -666,7 +666,7 @@ ENGINE = InnoDB;`)
     await queryRunner.query(`CREATE TABLE IF NOT EXISTS \`schedule_has_service\` (
   \`schedule_id\` VARCHAR(36) NOT NULL,
   \`service_id\` VARCHAR(36) NOT NULL,
-  \`duration\` TIME NULL,
+  \`duration\` INT NULL,
   PRIMARY KEY (\`schedule_id\`, \`service_id\`),
   INDEX \`fk_schedule_has_service_service1_idx\` (\`service_id\` ASC),
   INDEX \`fk_schedule_has_service_schedule1_idx\` (\`schedule_id\` ASC),
@@ -685,7 +685,7 @@ ENGINE = InnoDB;`)
     await queryRunner.query(`CREATE TABLE IF NOT EXISTS \`service_detail\` (
   \`id\` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   \`price\` DECIMAL(10,2) NOT NULL,
-  \`duration\` TIME NOT NULL,
+  \`duration\` INT NOT NULL,
   \`scheduling\` TINYINT(1) NULL DEFAULT 1,
   \`created_at\` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   \`updated_at\` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,

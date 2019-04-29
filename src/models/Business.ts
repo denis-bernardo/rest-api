@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn, OneToMany, ManyToOne } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn, OneToMany, ManyToOne, ManyToMany, JoinTable } from 'typeorm'
 import BusinessType from './BusinessType'
 import Address from './Address'
 import Plan from './Plan'
@@ -16,6 +16,7 @@ import Register from './Register'
 import Schedule from './Schedule'
 import ServiceDetail from './ServiceDetail'
 import PaymentDetail from './PaymentDetail'
+import User from './User'
 
 @Entity()
 export default class Business {
@@ -141,4 +142,16 @@ export default class Business {
 
   @OneToMany(() => PaymentDetail, paymentDetail => paymentDetail.business)
   public paymentDetails: PaymentDetail[]
+
+  @ManyToMany(() => User, user => user.businesses)
+  @JoinTable({
+    name: 'business_has_user',
+    joinColumn: {
+      name: 'business_id'
+    },
+    inverseJoinColumn: {
+      name: 'user_id'
+    }
+  })
+  public users: User[]
 }

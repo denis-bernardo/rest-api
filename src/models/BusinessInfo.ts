@@ -6,28 +6,47 @@ export default class BusinessInfo {
   @PrimaryGeneratedColumn()
   public id: number
 
-  @Column('boolean')
+  @Column({
+    type: 'boolean',
+    name: 'accept_credit_card'
+  })
   public acceptCreditCard?: boolean
 
-  @Column('boolean')
+  @Column({
+    type: 'boolean',
+    name: 'accept_debit_card'
+  })
   public acceptDebitCard?: boolean
 
-  @Column('boolean')
+  @Column({
+    type: 'boolean',
+    name: 'has_parking'
+  })
   public hasParking?: boolean
 
-  @Column('boolean')
+  @Column({
+    type: 'boolean',
+    name: 'has_wifi'
+  })
   public hasWifi?: boolean
 
   @Column('boolean')
   public accessbility?: boolean
 
-  @Column('boolean')
+  @Column({
+    type: 'boolean',
+    name: 'support_children'
+  })
   public supportChildren?: boolean
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    name: 'created_at'
+  })
   public createdAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    name: 'updated_at'
+  })
   public updatedAt: Date
 
   @OneToOne(() => Business)

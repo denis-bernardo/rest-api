@@ -1,5 +1,5 @@
 import * as Joi from 'joi'
-import { getRuleRequired } from './index'
+import { getRuleRequired, getRuleOptional } from '../index'
 
 class BusinessValidator {
   public validateCreation () {
@@ -17,13 +17,13 @@ class BusinessValidator {
   private getSchema (isCreate = true) {
     return Joi.object({
       name: getRuleRequired(Joi.string(), isCreate),
-      companyName: Joi.string(),
-      phoneNumber: Joi.string(),
-      landlineNumber: Joi.string(),
-      email: Joi.string().email(),
-      image: Joi.string().uri(),
-      ie: Joi.string().allow('').optional(),
-      description: Joi.string(),
+      companyName: getRuleOptional(Joi.string()),
+      phoneNumber: getRuleOptional(Joi.string()),
+      landlineNumber: getRuleOptional(Joi.string()),
+      email: getRuleOptional(Joi.string().email()),
+      image: getRuleOptional(Joi.string().uri()),
+      ie: getRuleOptional(Joi.string()),
+      description: getRuleOptional(Joi.string().max(500)),
       deactivatedAt: Joi.date(),
       businessTypeId: getRuleRequired(Joi.number(), isCreate),
       planId: getRuleRequired(Joi.number(), isCreate),

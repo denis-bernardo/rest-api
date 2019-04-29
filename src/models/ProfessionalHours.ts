@@ -7,24 +7,31 @@ export default class ProfessionalHours {
   public id: number
 
   @Column({
-    type: 'int'
+    type: 'int',
+    name: 'week_day'
   })
   public weekDay: number
 
   @Column({
-    type: 'time'
+    type: 'time',
+    name: 'start_at'
   })
-  public startAt: number
+  public startAt: string
 
   @Column({
-    type: 'time'
+    type: 'time',
+    name: 'end_at'
   })
-  public endAt: number
+  public endAt: string
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    name: 'created_at'
+  })
   public createdAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    name: 'updated_at'
+  })
   public updatedAt: Date
 
   @ManyToOne(() => Professional, (professional) => professional.hours)

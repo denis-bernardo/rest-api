@@ -1,8 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany, ManyToMany } from 'typeorm'
 import Business from './Business'
 import ServiceCategory from './ServiceCategory'
 import OrderItem from './OrderItem'
 import ServiceDetail from './ServiceDetail'
+import Professional from './Professional'
 
 @Entity()
 export default class Service {
@@ -18,10 +19,14 @@ export default class Service {
   @Column('boolean')
   public preset?: boolean
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    name: 'created_at'
+  })
   public createdAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    name: 'updated_at'
+  })
   public updatedAt: Date
 
   @ManyToOne(() => Business, (business) => business.services)
@@ -30,11 +35,14 @@ export default class Service {
 
   @ManyToOne(() => ServiceCategory, (serviceCategory) => serviceCategory.services)
   @JoinColumn({ name: 'service_category_id' })
-  public categories: ServiceCategory
+  public category: ServiceCategory
 
   @OneToMany(() => OrderItem, orderItem => orderItem.service)
   public orderItems: OrderItem[]
 
   @OneToMany(() => ServiceDetail, serviceDetail => serviceDetail.business)
   public serviceDetails: ServiceDetail[]
+
+  @ManyToMany(() => Professional, professional => professional.services)
+  public professionals: Professional[]
 }

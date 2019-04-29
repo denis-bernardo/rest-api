@@ -14,8 +14,8 @@ export const validator = (data: object, schema: Joi.ObjectSchema, options?: Joi.
 
   if (error) {
     const errorDetails = error.details.reduce((accumulate: IDummyObject, err: Joi.ValidationErrorItem) => {
-      if (err.context && err.context.key) {
-        accumulate[err.context.key] = err.message
+      if (err.path && err.path.length) {
+        accumulate[err.path.join('.')] = err.message
       }
 
       return accumulate
@@ -27,10 +27,14 @@ export const validator = (data: object, schema: Joi.ObjectSchema, options?: Joi.
   return value
 }
 
-export const getRuleRequired = (rule: any, isRequired: boolean) => {
+export const getRuleRequired = (rule: Joi.AnySchema, isRequired: boolean) => {
   if (isRequired) {
     return rule.required()
   }
 
   return rule
+}
+
+export const getRuleOptional = (rule: Joi.AnySchema) => {
+  return rule.allow('').optional()
 }

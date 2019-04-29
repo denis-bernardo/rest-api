@@ -7,24 +7,29 @@ export default class BusinessHours {
   public id: number
 
   @Column({
-    type: 'int'
+    type: 'int',
+    name: 'week_day'
   })
   public weekDay: number
 
   @Column({
     type: 'time'
   })
-  public open?: number
+  public open?: string
 
   @Column({
     type: 'time'
   })
-  public closed?: number
+  public closed?: string
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    name: 'created_at'
+  })
   public createdAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    name: 'updated_at'
+  })
   public updatedAt: Date
 
   @ManyToOne(() => Business, (business) => business.businessHours)
