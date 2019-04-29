@@ -17,17 +17,21 @@ export default class UserGroup {
   @Column('boolean')
   public preset?: boolean
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    name: 'created_at'
+  })
   public createdAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    name: 'updated_at'
+  })
   public updatedAt: Date
 
   @ManyToOne(() => Business, (business) => business.userGroups)
   @JoinColumn({ name: 'business_id' })
   public business: Business
 
-  @OneToMany(() => User, user => user.userGroups)
+  @OneToMany(() => User, user => user.userGroup)
   public users: User[]
 
   @ManyToMany(() => UserResource)

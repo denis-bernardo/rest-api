@@ -18,10 +18,14 @@ export default class BusinessSocial {
   @Column('varchar')
   public twitter?: string
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    name: 'created_at'
+  })
   public createdAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    name: 'updated_at'
+  })
   public updatedAt: Date
 
   @OneToOne(() => Business)

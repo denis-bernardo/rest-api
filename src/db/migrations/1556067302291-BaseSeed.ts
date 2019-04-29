@@ -76,6 +76,12 @@ export class BaseSeed1556067302291 implements MigrationInterface {
         (4,'Cancelado pelo estabelecimento','2019-04-23 23:15:25','2019-04-23 23:15:25');
     
     `)
+
+    await queryRunner.query(`INSERT INTO \`plan\` (\`id\`, \`name\`, \`price\`, \`external_id\`, \`created_at\`, \`updated_at\`)
+    VALUES
+        (1,'Padrão',39.90,NULL,'2019-04-23 23:14:44','2019-04-23 23:14:44');
+    
+    `)
   }
 
   public async down (queryRunner: QueryRunner) {

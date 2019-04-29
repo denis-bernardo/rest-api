@@ -2,7 +2,7 @@ import { Router } from 'express'
 import BusinessController from '../controllers/BusinessController'
 import asyncFn from '../middlewares/asyncMiddleware'
 import validate from '../middlewares/validationMiddleware'
-import businessValidator from '../validators/BusinessValidator'
+import businessValidator from '../validations/validators/BusinessValidator'
 
 const businessController = new BusinessController()
 

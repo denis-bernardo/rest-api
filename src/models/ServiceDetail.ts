@@ -14,16 +14,22 @@ export default class ServiceDetail {
   })
   public price: number
 
-  @Column('time')
+  @Column({
+    type: 'int'
+  })
   public duration: number
 
   @Column('boolean')
   public scheduling?: boolean
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    name: 'created_at'
+  })
   public createdAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    name: 'updated_at'
+  })
   public updatedAt: Date
 
   @ManyToOne(() => Service, (service) => service.serviceDetails)

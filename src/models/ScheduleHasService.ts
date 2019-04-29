@@ -8,6 +8,8 @@ export default class ScheduleHasService {
   @PrimaryGeneratedColumn('uuid')
   public serviceId: string
 
-  @Column('time')
+  @Column({
+    type: 'int'
+  })
   public duration?: number
 }

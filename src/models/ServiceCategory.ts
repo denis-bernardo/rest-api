@@ -16,16 +16,20 @@ export default class ServiceCategory {
   @Column('boolean')
   public preset?: boolean
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    name: 'created_at'
+  })
   public createdAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    name: 'updated_at'
+  })
   public updatedAt: Date
 
   @ManyToOne(() => Business, (business) => business.serviceCategories)
   @JoinColumn({ name: 'business_id' })
   public business: Business
 
-  @OneToMany(() => Service, service => service.categories)
+  @OneToMany(() => Service, service => service.category)
   public services: Service[]
 }
