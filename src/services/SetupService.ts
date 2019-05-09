@@ -122,7 +122,7 @@ export default class SetupService {
 
         service = this.transactionalEntityManager.create(Service, {
           name,
-          category: serviceCategory,
+          serviceCategory,
           business: this.business
         })
 

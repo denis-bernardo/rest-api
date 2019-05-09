@@ -8,7 +8,9 @@ import PlanRepository from '../repositories/PlanRepository'
 export default class BusinessController {
   public async list (req: Request, res: Response) {
     const businessRepository = getCustomRepository(BusinessRepository)
-    const response = await businessRepository.paginate(req.query.page, req.query.limit)
+    const response = await businessRepository.paginate(req.query.page, req.query.limit, {
+      order: { createdAt: 'DESC' }
+    })
     return res.json(response)
   }
 

@@ -84,6 +84,6 @@ export class BaseSeed1556067302291 implements MigrationInterface {
     `)
   }
 
-  public async down (queryRunner: QueryRunner) {
+  public async down () {
   }
 }
