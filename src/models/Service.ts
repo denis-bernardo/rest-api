@@ -35,12 +35,12 @@ export default class Service {
 
   @ManyToOne(() => ServiceCategory, (serviceCategory) => serviceCategory.services)
   @JoinColumn({ name: 'service_category_id' })
-  public category: ServiceCategory
+  public serviceCategory: ServiceCategory
 
   @OneToMany(() => OrderItem, orderItem => orderItem.service)
   public orderItems: OrderItem[]
 
-  @OneToMany(() => ServiceDetail, serviceDetail => serviceDetail.business)
+  @OneToMany(() => ServiceDetail, serviceDetail => serviceDetail.service, { cascade: true })
   public serviceDetails: ServiceDetail[]
 
   @ManyToMany(() => Professional, professional => professional.services)

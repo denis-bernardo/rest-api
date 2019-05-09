@@ -30,6 +30,6 @@ export default class ServiceCategory {
   @JoinColumn({ name: 'business_id' })
   public business: Business
 
-  @OneToMany(() => Service, service => service.category)
+  @OneToMany(() => Service, service => service.serviceCategory)
   public services: Service[]
 }
