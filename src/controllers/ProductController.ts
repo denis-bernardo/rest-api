@@ -12,8 +12,7 @@ export default class ProductController {
       order: { createdAt: 'DESC' },
       where: [
         { business: { id: req.business.id } }
-      ],
-      relations: ['serviceDetails']
+      ]
     })
     return res.json(response)
   }
