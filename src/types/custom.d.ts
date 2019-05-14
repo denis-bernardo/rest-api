@@ -6,7 +6,7 @@ import Business from '../models/Business'
 declare global {
   namespace Express {
     interface Request {
-      user: IAuthUser
+      user: any
       business: Business
     }
   }
