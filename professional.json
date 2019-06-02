@@ -1,0 +1,18 @@
+{
+  "name": "",
+  "nickname": "",
+  "gender": "",
+  "birthDate": "",
+  "document": "",
+  "phoneNumber": "",
+  "landlineNumber": "",
+  "hours": [{
+    "weekDay": "",
+    "startAt": "",
+    "endAt": ""
+  }],
+  "user": {
+    "email": "",
+    "password": ""
+  }
+}

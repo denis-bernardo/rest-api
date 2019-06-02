@@ -1,4 +1,3 @@
-import * as bcrypt from 'bcryptjs'
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany, BeforeInsert, ManyToMany } from 'typeorm'
 import UserGroup from './UserGroup'
 import Register from './Register'
@@ -6,37 +5,15 @@ import Business from './Business'
 
 @Entity()
 export default class User {
-  @BeforeInsert()
-  protected setPassword () {
-    this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync())
-  }
-
   @PrimaryGeneratedColumn('uuid')
   public id: string
 
   @Column({
+    name: 'cognito_user_sub',
     type: 'varchar',
-    length: 150
+    length: 100
   })
-  public email: string
-
-  @Column({
-    type: 'varchar',
-    length: 255
-  })
-  public password: string
-
-  @Column({
-    type: 'varchar',
-    length: 255
-  })
-  public image?: string
-
-  @Column({
-    type: 'datetime',
-    name: 'deactivated_at'
-  })
-  public deactivatedAt?: Date
+  public cognitoUserSub: string
 
   @CreateDateColumn({
     name: 'created_at'

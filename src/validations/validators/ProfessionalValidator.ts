@@ -1,0 +1,33 @@
+import * as Joi from 'joi'
+import { getRuleRequired, getRuleOptional } from '../index'
+
+class ProfessionalValidator {
+  public validate (isCreate = true) {
+    return Joi.object({
+      body: this.getSchema(isCreate)
+    })
+  }
+
+  private getSchema (isCreate: boolean) {
+    return Joi.object({
+      name: getRuleRequired(Joi.string(), isCreate),
+      nickname: getRuleOptional(Joi.string()),
+      gender: getRuleOptional(Joi.string().valid(['M', 'F'])),
+      birthDate: getRuleOptional(Joi.date()),
+      document: getRuleOptional(Joi.string()),
+      phoneNumber: getRuleOptional(Joi.string()),
+      landlineNumber: getRuleOptional(Joi.string()),
+      hours: Joi.array().items(Joi.object({
+        weekDay: Joi.number().min(0).max(6).required(),
+        startAt: Joi.string().required(),
+        endAt: Joi.string().required()
+      })),
+      user: getRuleRequired(Joi.object({
+        email: Joi.string().email().required(),
+        password: Joi.string().regex(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9!@#$&%]+){8,30}$/).required()
+      }), isCreate)
+    })
+  }
+}
+
+export default new ProfessionalValidator()

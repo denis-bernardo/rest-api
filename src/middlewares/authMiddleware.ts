@@ -45,7 +45,7 @@ const authMiddleware = asyncFn(async (req: Request, res: Response, next: NextFun
 
   try {
     const response = await validateToken(token)
-    req.user = { ...response, 'cognito:custom:business': '38077626-3d0d-40a0-a9a0-d1087ab60b8e' }
+    req.user = response
     console.log(req.user)
     next()
   } catch (err) {

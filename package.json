@@ -21,7 +21,6 @@
   },
   "homepage": "https://github.com/denis-bernardo/rest-api#readme",
   "devDependencies": {
-    "@types/bcryptjs": "^2.4.2",
     "@types/body-parser": "^1.17.0",
     "@types/cors": "^2.8.4",
     "@types/dotenv": "^6.1.1",
@@ -43,7 +42,7 @@
     "typescript": "^3.4.2"
   },
   "dependencies": {
-    "bcryptjs": "^2.4.3",
+    "@aws-amplify/auth": "^1.2.24",
     "body-parser": "^1.18.3",
     "cognito-express": "^2.0.14",
     "cors": "^2.8.5",

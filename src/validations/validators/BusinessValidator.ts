@@ -2,15 +2,9 @@ import * as Joi from 'joi'
 import { getRuleRequired, getRuleOptional } from '../index'
 
 class BusinessValidator {
-  public validateCreation () {
+  public validate (isCreate = true) {
     return Joi.object({
-      body: this.getSchema()
-    })
-  }
-
-  public validateUpdate () {
-    return Joi.object({
-      body: this.getSchema(false)
+      body: this.getSchema(isCreate)
     })
   }
 

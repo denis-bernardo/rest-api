@@ -5,9 +5,9 @@ import NotFoundException from '../exceptions/NotFoundException'
 import asyncFn from './asyncMiddleware'
 
 const identityMiddleware = asyncFn(async (req: Request, res: Response, next: NextFunction) => {
-  if (req.user['cognito:custom:business']) {
+  if (req.user['custom:business']) {
     const businessRepository = getCustomRepository(BusinessRepository)
-    const business = await businessRepository.findOne({ where: { id: req.user['cognito:custom:business'] } })
+    const business = await businessRepository.findOne({ where: { id: req.user['custom:business'] } })
 
     if (!business) {
       throw new NotFoundException('business não encontrado')
