@@ -22,9 +22,10 @@ class ProfessionalValidator {
         startAt: Joi.string().required(),
         endAt: Joi.string().required()
       })),
+      services: Joi.array().items(Joi.string()),
       user: getRuleRequired(Joi.object({
-        email: Joi.string().email().required(),
-        password: Joi.string().regex(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9!@#$&%]+){8,30}$/).required()
+        cognitoUserSub: getRuleRequired(Joi.string(), isCreate),
+        userGroupId: getRuleRequired(Joi.number(), isCreate)
       }), isCreate)
     })
   }
