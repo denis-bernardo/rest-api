@@ -10,9 +10,9 @@ const router = Router()
 
 router.get('/', asyncFn(businessController.list.bind(businessController)))
 router.get('/:id', asyncFn(businessController.show.bind(businessController)))
-router.post('/', validate(businessValidator.validateCreation()),
+router.post('/', validate(businessValidator.validate()),
   asyncFn(businessController.create.bind(businessController)))
-router.put('/:id', validate(businessValidator.validateUpdate()),
+router.put('/:id', validate(businessValidator.validate(false)),
   asyncFn(businessController.update.bind(businessController)))
 
 export default router

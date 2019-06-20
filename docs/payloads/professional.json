@@ -1,0 +1,26 @@
+{
+  "name": "Denis Bernardo",
+  "nickname": "Denis",
+  "gender": "M",
+  "birthDate": "1994-02-28",
+  "document": "11111111111",
+  "phoneNumber": "43999999999",
+  "landlineNumber": "4333333333",
+  "hours": [
+    {
+      "weekDay": 1,
+      "startAt": "0800",
+      "endAt": "1200"
+    },
+    {
+      "weekDay": 1,
+      "startAt": "1400",
+      "endAt": "1800"
+    }
+  ],
+  "services": ["d83376db-472e-4048-8c5a-faeea8b00be4"],
+  "user": {
+    "cognitoUserSub": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+    "userGroupId": 3
+  }
+}

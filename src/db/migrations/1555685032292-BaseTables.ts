@@ -147,15 +147,12 @@ ENGINE = InnoDB;`)
 
     await queryRunner.query(`CREATE TABLE IF NOT EXISTS \`user\` (
   \`id\` VARCHAR(36) NOT NULL,
-  \`email\` VARCHAR(150) NOT NULL,
-  \`password\` VARCHAR(255) NOT NULL,
-  \`image\` VARCHAR(255) NULL,
-  \`deactivated_at\` DATETIME NULL,
+  \`cognito_user_sub\` VARCHAR(100) NOT NULL,
   \`created_at\` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   \`updated_at\` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   \`user_group_id\` INT(11) UNSIGNED NOT NULL,
   PRIMARY KEY (\`id\`),
-  UNIQUE INDEX \`email_UNIQUE\` (\`email\` ASC),
+  UNIQUE INDEX \`cognito_user_sub_UNIQUE\` (\`cognito_user_sub\` ASC),
   INDEX \`fk_user_user_group1_idx\` (\`user_group_id\` ASC),
   CONSTRAINT \`fk_user_user_group1\`
     FOREIGN KEY (\`user_group_id\`)

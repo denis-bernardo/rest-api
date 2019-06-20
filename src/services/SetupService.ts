@@ -182,20 +182,19 @@ export default class SetupService {
   }
 
   private async createUser (userData: IUser) {
-    const { email, password, userGroupId } = userData
+    const { userGroupId, cognitoUserSub } = userData
     const userGroup = await this.transactionalEntityManager.findOne(UserGroup, userGroupId)
 
     if (!userGroup) {
       throw new NotFoundException('userGroup não encontrado')
     }
 
-    const userAlreadyExists = await this.transactionalEntityManager.findOne(User, { where: { email } })
+    const userAlreadyExists = await this.transactionalEntityManager.findOne(User, { where: { cognitoUserSub } })
 
-    if (userAlreadyExists) throw new ConflictException(`Já existe um usuário com este email cadastrado: ${email}`)
+    if (userAlreadyExists) throw new ConflictException(`Usuário já cadastrado: ${cognitoUserSub}`)
 
     const user = this.transactionalEntityManager.create(User, {
-      email,
-      password,
+      cognitoUserSub,
       userGroup
     })
 
