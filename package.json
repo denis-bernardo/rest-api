@@ -42,7 +42,6 @@
     "typescript": "^3.4.2"
   },
   "dependencies": {
-    "@aws-amplify/auth": "^1.2.24",
     "body-parser": "^1.18.3",
     "cognito-express": "^2.0.14",
     "cors": "^2.8.5",
