@@ -17,6 +17,7 @@ import Schedule from './Schedule'
 import ServiceDetail from './ServiceDetail'
 import PaymentDetail from './PaymentDetail'
 import User from './User'
+import Customer from './Customer'
 
 @Entity()
 export default class Business {
@@ -154,4 +155,16 @@ export default class Business {
     }
   })
   public users: User[]
+
+  @ManyToMany(() => Customer, customer => customer.businesses)
+  @JoinTable({
+    name: 'business_has_customer',
+    joinColumn: {
+      name: 'business_id'
+    },
+    inverseJoinColumn: {
+      name: 'customer_id'
+    }
+  })
+  public customers: Customer[]
 }

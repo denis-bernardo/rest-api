@@ -1,0 +1,20 @@
+{
+  "name": "Denis Bernardo",
+  "phoneNumber": "43999999999",
+  "birthDate": "1994-02-28",
+  "gender": "M",
+  "address": {
+    "street": "",
+    "number": "",
+    "neighborhood": "",
+    "complement": "",
+    "city": "",
+    "state": "",
+    "country": "",
+    "zipCode": ""
+  },
+  "user": {
+    "cognitoUserSub": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+    "userGroupId": 3
+  }
+}
