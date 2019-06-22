@@ -16,8 +16,9 @@ import BusinessHours from '../models/BusinessHours'
 import ProfessionalHours from '../models/ProfessionalHours'
 import ProfessionalHasService from '../models/ProfessionalHasService'
 import BusinessHasUser from '../models/BusinessHasUser'
-import { ISetupOptions, IServicesRef, IUser } from '../interfaces/ISetupOptions'
+import { ISetupOptions, IServicesRef } from '../interfaces/ISetupOptions'
 import ConflictException from '../exceptions/ConflictException'
+import { IUserOptions } from '../interfaces/IUserOptions'
 
 export default class SetupService {
   private transactionalEntityManager: EntityManager
@@ -181,7 +182,7 @@ export default class SetupService {
     }))
   }
 
-  private async createUser (userData: IUser) {
+  private async createUser (userData: IUserOptions) {
     const { userGroupId, cognitoUserSub } = userData
     const userGroup = await this.transactionalEntityManager.findOne(UserGroup, userGroupId)
 

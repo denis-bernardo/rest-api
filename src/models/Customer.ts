@@ -1,8 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToOne, OneToMany } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToOne, OneToMany, ManyToMany } from 'typeorm'
 import Address from './Address'
 import User from './User'
 import Order from './Order'
 import Schedule from './Schedule'
+import Business from './Business'
 
 @Entity()
 export default class Customer {
@@ -40,7 +41,7 @@ export default class Customer {
 
   @ManyToOne(() => Address, (address) => address.customers)
   @JoinColumn({ name: 'address_id' })
-  public address: Address
+  public address?: Address
 
   @OneToOne(() => User)
   @JoinColumn({ name: 'user_id' })
@@ -51,4 +52,7 @@ export default class Customer {
 
   @OneToMany(() => Schedule, schedule => schedule.customer)
   public schedules: Schedule[]
+
+  @ManyToMany(() => Business, business => business.users)
+  public businesses: Business[]
 }

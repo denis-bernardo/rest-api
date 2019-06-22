@@ -1,3 +1,5 @@
+import { IUserOptions } from './IUserOptions'
+
 interface IBusiness {
   name: string
   phoneNumber?: string
@@ -63,7 +65,7 @@ interface IServiceDetail {
 interface IProfessional {
   name: string
   nickname?: string
-  user: IUser
+  user: IUserOptions
   hours: IProfessionalHours[],
   services: string[]
 }
@@ -72,11 +74,6 @@ interface IProfessionalHours {
   weekDay: number
   startAt: string
   endAt: string
-}
-
-export interface IUser {
-  cognitoUserSub: string
-  userGroupId: number
 }
 
 export interface ISetupOptions {
