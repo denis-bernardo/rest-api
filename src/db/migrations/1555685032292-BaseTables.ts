@@ -424,6 +424,74 @@ ENGINE = InnoDB;`)
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;`)
 
+    await queryRunner.query(`CREATE TABLE IF NOT EXISTS \`schedule_status\` (
+  \`id\` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  \`name\` VARCHAR(45) NOT NULL,
+  \`created_at\` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  \`updated_at\` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (\`id\`))
+ENGINE = InnoDB;`)
+
+    await queryRunner.query(`CREATE TABLE IF NOT EXISTS \`schedule\` (
+  \`id\` VARCHAR(36) NOT NULL,
+  \`scheduled_to\` DATE NOT NULL,
+  \`week_day\` INT(1) NOT NULL,
+  \`start_at\` TIME NOT NULL,
+  \`end_at\` TIME NOT NULL,
+  \`note\` VARCHAR(255) NULL,
+  \`created_at\` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  \`updated_at\` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  \`confirmed_at\` DATETIME NULL,
+  \`professional_id\` VARCHAR(36) NOT NULL,
+  \`customer_id\` VARCHAR(36) NOT NULL,
+  \`business_id\` VARCHAR(36) NOT NULL,
+  \`schedule_status_id\` INT(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (\`id\`),
+  INDEX \`fk_schedule_professional1_idx\` (\`professional_id\` ASC),
+  INDEX \`fk_schedule_customer1_idx\` (\`customer_id\` ASC),
+  INDEX \`fk_schedule_business1_idx\` (\`business_id\` ASC),
+  INDEX \`fk_schedule_schedule_status1_idx\` (\`schedule_status_id\` ASC),
+  CONSTRAINT \`fk_schedule_professional1\`
+    FOREIGN KEY (\`professional_id\`)
+    REFERENCES \`professional\` (\`id\`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT \`fk_schedule_customer1\`
+    FOREIGN KEY (\`customer_id\`)
+    REFERENCES \`customer\` (\`id\`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT \`fk_schedule_business1\`
+    FOREIGN KEY (\`business_id\`)
+    REFERENCES \`business\` (\`id\`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT \`fk_schedule_schedule_status1\`
+    FOREIGN KEY (\`schedule_status_id\`)
+    REFERENCES \`schedule_status\` (\`id\`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;`)
+
+    await queryRunner.query(`CREATE TABLE IF NOT EXISTS \`schedule_has_service\` (
+  \`schedule_id\` VARCHAR(36) NOT NULL,
+  \`service_id\` VARCHAR(36) NOT NULL,
+  \`duration\` INT NULL,
+  PRIMARY KEY (\`schedule_id\`, \`service_id\`),
+  INDEX \`fk_schedule_has_service_service1_idx\` (\`service_id\` ASC),
+  INDEX \`fk_schedule_has_service_schedule1_idx\` (\`schedule_id\` ASC),
+  CONSTRAINT \`fk_schedule_has_service_schedule1\`
+    FOREIGN KEY (\`schedule_id\`)
+    REFERENCES \`schedule\` (\`id\`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT \`fk_schedule_has_service_service1\`
+    FOREIGN KEY (\`service_id\`)
+    REFERENCES \`service\` (\`id\`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;`)
+
     await queryRunner.query(`CREATE TABLE IF NOT EXISTS \`order_status\` (
   \`id\` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   \`name\` VARCHAR(45) NOT NULL,
@@ -463,6 +531,7 @@ ENGINE = InnoDB;`)
   \`business_id\` VARCHAR(36) NOT NULL,
   \`customer_id\` VARCHAR(36) NULL,
   \`cashier_id\` VARCHAR(36) NULL,
+  \`schedule_id\` VARCHAR(36) NULL,
   PRIMARY KEY (\`id\`),
   INDEX \`fk_order_order_status1_idx\` (\`order_status_id\` ASC),
   INDEX \`fk_order_payment1_idx\` (\`payment_id\` ASC),
@@ -470,6 +539,7 @@ ENGINE = InnoDB;`)
   INDEX \`fk_order_business1_idx\` (\`business_id\` ASC),
   INDEX \`fk_order_customer1_idx\` (\`customer_id\` ASC),
   INDEX \`fk_order_professional2_idx\` (\`cashier_id\` ASC),
+  INDEX \`fk_order_schedule1_idx\` (\`schedule_id\` ASC),
   CONSTRAINT \`fk_order_order_status1\`
     FOREIGN KEY (\`order_status_id\`)
     REFERENCES \`order_status\` (\`id\`)
@@ -498,6 +568,11 @@ ENGINE = InnoDB;`)
   CONSTRAINT \`fk_order_professional2\`
     FOREIGN KEY (\`cashier_id\`)
     REFERENCES \`professional\` (\`id\`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT \`fk_order_schedule1\`
+    FOREIGN KEY (\`schedule_id\`)
+    REFERENCES \`schedule\` (\`id\`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;`)
@@ -607,74 +682,6 @@ ENGINE = InnoDB;`)
   CONSTRAINT \`fk_cash_flow_register1\`
     FOREIGN KEY (\`register_id\`)
     REFERENCES \`register\` (\`id\`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;`)
-
-    await queryRunner.query(`CREATE TABLE IF NOT EXISTS \`schedule_status\` (
-  \`id\` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  \`name\` VARCHAR(45) NOT NULL,
-  \`created_at\` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  \`updated_at\` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (\`id\`))
-ENGINE = InnoDB;`)
-
-    await queryRunner.query(`CREATE TABLE IF NOT EXISTS \`schedule\` (
-  \`id\` VARCHAR(36) NOT NULL,
-  \`scheduled_to\` DATE NOT NULL,
-  \`week_day\` INT(1) NOT NULL,
-  \`start_at\` TIME NOT NULL,
-  \`end_at\` TIME NOT NULL,
-  \`note\` VARCHAR(255) NULL,
-  \`created_at\` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  \`updated_at\` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  \`confirmed_at\` DATETIME NULL,
-  \`professional_id\` VARCHAR(36) NOT NULL,
-  \`customer_id\` VARCHAR(36) NOT NULL,
-  \`business_id\` VARCHAR(36) NOT NULL,
-  \`schedule_status_id\` INT(11) UNSIGNED NOT NULL,
-  PRIMARY KEY (\`id\`),
-  INDEX \`fk_schedule_professional1_idx\` (\`professional_id\` ASC),
-  INDEX \`fk_schedule_customer1_idx\` (\`customer_id\` ASC),
-  INDEX \`fk_schedule_business1_idx\` (\`business_id\` ASC),
-  INDEX \`fk_schedule_schedule_status1_idx\` (\`schedule_status_id\` ASC),
-  CONSTRAINT \`fk_schedule_professional1\`
-    FOREIGN KEY (\`professional_id\`)
-    REFERENCES \`professional\` (\`id\`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION,
-  CONSTRAINT \`fk_schedule_customer1\`
-    FOREIGN KEY (\`customer_id\`)
-    REFERENCES \`customer\` (\`id\`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT \`fk_schedule_business1\`
-    FOREIGN KEY (\`business_id\`)
-    REFERENCES \`business\` (\`id\`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT \`fk_schedule_schedule_status1\`
-    FOREIGN KEY (\`schedule_status_id\`)
-    REFERENCES \`schedule_status\` (\`id\`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;`)
-
-    await queryRunner.query(`CREATE TABLE IF NOT EXISTS \`schedule_has_service\` (
-  \`schedule_id\` VARCHAR(36) NOT NULL,
-  \`service_id\` VARCHAR(36) NOT NULL,
-  \`duration\` INT NULL,
-  PRIMARY KEY (\`schedule_id\`, \`service_id\`),
-  INDEX \`fk_schedule_has_service_service1_idx\` (\`service_id\` ASC),
-  INDEX \`fk_schedule_has_service_schedule1_idx\` (\`schedule_id\` ASC),
-  CONSTRAINT \`fk_schedule_has_service_schedule1\`
-    FOREIGN KEY (\`schedule_id\`)
-    REFERENCES \`schedule\` (\`id\`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION,
-  CONSTRAINT \`fk_schedule_has_service_service1\`
-    FOREIGN KEY (\`service_id\`)
-    REFERENCES \`service\` (\`id\`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;`)

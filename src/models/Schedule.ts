@@ -1,8 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm'
 import Business from './Business'
 import Professional from './Professional'
 import Customer from './Customer'
 import ScheduleStatus from './ScheduleStatus'
+import Order from './Order'
 
 @Entity()
 export default class Schedule {
@@ -61,4 +62,7 @@ export default class Schedule {
   @ManyToOne(() => ScheduleStatus, (scheduleStatus) => scheduleStatus.schedules)
   @JoinColumn({ name: 'schedule_status_id' })
   public status: ScheduleStatus
+
+  @OneToMany(() => Order, order => order.schedule)
+  public orders: Order[]
 }

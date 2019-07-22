@@ -1,0 +1,22 @@
+{
+  "note": "Observation",
+  "amount": 19.99,
+  "amountReceived": 20,
+  "orderStatusId": 1,
+  "paymentId": 1,
+  "professionalId": "83847b74-9b85-4be2-b999-1468a43e313c",
+  "customerId": "989efde3-e14a-4cad-b40b-c855bd0558f0",
+  "cashierId": "ec7c6515-d775-434a-9649-e753a82537a2",
+  "scheduleId": "8889a8c5-ded8-4016-a876-f3710d7d617e",
+  "items": [
+    {
+      "name": "product or service name",
+      "quantity": 1,
+      "price": 19.99,
+      "discount": 0,
+      "isTip": false,
+      "productId": 1,
+      "serviceId": null
+    }
+  ]
+}

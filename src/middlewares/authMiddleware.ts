@@ -3,6 +3,7 @@ import asyncFn from './asyncMiddleware'
 import ForbiddenException from '../exceptions/ForbiddenException'
 import UnauthorizedException from '../exceptions/UnauthorizedException'
 import * as CognitoExpress from 'cognito-express'
+import IAuthUser from '../interfaces/IAuthUser'
 
 const getTokenFromRequest = (req: Request) => {
   let token
@@ -23,6 +24,18 @@ const getTokenFromRequest = (req: Request) => {
   return token.trim()
 }
 
+const formatResponse = (response: any): IAuthUser => {
+  return {
+    email: response.email,
+    id: response.id,
+    businesses: JSON.parse(response['custom:businesses']),
+    business: response['custom:business'],
+    permissions: JSON.parse(response['custom:permissions']),
+    professionalId: response['custom:professionalId'],
+    isAdmin: !!response['custom:isAdmin']
+  }
+}
+
 const validateToken = (token: string) => {
   const cognitoExpress = new CognitoExpress({
     region: process.env.AWS_COGNITO_REGION,
@@ -31,11 +44,17 @@ const validateToken = (token: string) => {
     tokenExpiration: 3600000
   })
 
-  return new Promise<object>((resolve, reject) => {
+  return new Promise<IAuthUser>((resolve, reject) => {
     cognitoExpress.validate(token, (err: Error, response: any) => {
       if (err) reject(err)
 
-      resolve(response)
+      const authUser = formatResponse(response)
+
+      if (!authUser.isAdmin) {
+        reject(new UnauthorizedException('access denied'))
+      }
+
+      resolve(authUser)
     })
   })
 }

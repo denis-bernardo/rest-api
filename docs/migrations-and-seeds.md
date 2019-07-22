@@ -19,4 +19,4 @@ $ npm run migrate
 $ npm run migrate-revert
 ```
 
-Obs.: TypeORM não possuí atualmente suporte para `seeds`, quando houver a necessidade de inserir dados, devemos utilizar `migrations`.
+Obs.: TypeORM não possui atualmente suporte para `seeds`, quando houver a necessidade de inserir dados, devemos utilizar `migrations`.

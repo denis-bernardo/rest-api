@@ -5,6 +5,7 @@ import Professional from './Professional'
 import Business from './Business'
 import Customer from './Customer'
 import OrderItem from './OrderItem'
+import Schedule from './Schedule'
 
 @Entity()
 export default class Order {
@@ -63,6 +64,10 @@ export default class Order {
   @ManyToOne(() => Professional, (professional) => professional.orders)
   @JoinColumn({ name: 'cashier_id' })
   public cashier: Professional
+
+  @ManyToOne(() => Schedule, (schedule) => schedule.orders)
+  @JoinColumn({ name: 'schedule_id' })
+  public schedule: Schedule
 
   @OneToMany(() => OrderItem, orderItem => orderItem.order)
   public items: OrderItem[]

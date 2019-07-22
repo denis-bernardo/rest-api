@@ -6,6 +6,7 @@ import product from './product'
 import professional from './professional'
 import customer from './customer'
 import payment from './payment'
+import order from './order'
 
 const router = Router()
 
@@ -16,5 +17,6 @@ router.use('/product', product)
 router.use('/professional', professional)
 router.use('/customer', customer)
 router.use('/payment', payment)
+router.use('/order', order)
 
 export default router
