@@ -1,16 +1,8 @@
-# Configuração Linter
+# Configuração Linter VScode
 
-Nesse projeto utiliza-se o eslint ao invés do tslint, e para configura-lo corretamente é necessário seguir os passos abaixo:
+Nesse projeto utiliza-se o eslint ao invés do tslint.
 
-## 1. Instalar dependências do projeto
-
-```bash
-$ npm i
-```
-
-## 2. Configurar VScode
-
-Acesse as configurações do projeto (cmd + shift + p e digite settings), a adicione as seguintes linhas:
+Acesse as configurações do projeto (cmd + shift + p e digite settings), e adicione as seguintes linhas:
 
 ```json
   "[typescript]": {
