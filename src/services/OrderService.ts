@@ -1,29 +1,29 @@
-import { getManager, EntityManager, getCustomRepository } from 'typeorm'
+import { getManager, EntityManager } from 'typeorm'
 import NotFoundException from '../exceptions/NotFoundException'
 import Business from '../models/Business'
-import UserGroup from '../models/UserGroup'
-import User from '../models/User'
 import Customer from '../models/Customer'
-import ConflictException from '../exceptions/ConflictException'
+import Order from '../models/Order'
 import { IOrderOptions } from '../interfaces/IOrderOptions'
-import Address from '../models/Address'
-import BusinessHasCustomer from '../models/BusinessHasCustomer'
-import OrderStatusRepository from '../repositories/OrderStatusRepository';
-import OrderStatus from '../models/OrderStatus';
-import Payment from '../models/Payment';
-import Professional from '../models/Professional';
+import OrderStatus from '../models/OrderStatus'
+import Payment from '../models/Payment'
+import Professional from '../models/Professional'
+import Schedule from '../models/Schedule'
+import OrderItem from '../models/OrderItem'
+import Service from '../models/Service'
+import Product from '../models/Product'
 
 export default class OrderService {
   private transactionalEntityManager: EntityManager
   private data: IOrderOptions
   private business: Business;
-  private user?: User;
   private customer: Customer;
   private id?: string;
-  private address?: Address;
   private orderStatus: OrderStatus;
   private payment: Payment;
-  professional: Professional;
+  private professional: Professional;
+  private cashier: Professional;
+  private order: Order;
+  private schedule: Schedule
 
   public constructor (business: Business) {
     this.business = business
@@ -33,22 +33,12 @@ export default class OrderService {
     this.data = data
     await getManager().transaction(async transactionalEntityManager => {
       this.transactionalEntityManager = transactionalEntityManager
-      // find order status
-      await this.getOrderStatus()
-      // find payment
-      await this.getPayment()
-      // find customer
-      await this.getCustomer()
-      // find professional
-      await this.getProfessional()
-      // find cashier
-      // find schedule
-
+      await this.getOrderRelationships()
       await this.saveOrder()
       await this.saveOrderItems()
     })
 
-    return this.customer
+    return this.order
   }
 
   public async update (id: string, data: IOrderOptions) {
@@ -56,84 +46,110 @@ export default class OrderService {
     this.data = data
     await getManager().transaction(async transactionalEntityManager => {
       this.transactionalEntityManager = transactionalEntityManager
-      await this.retrieveOrder()
+      await this.getOrder()
+      await this.getOrderRelationships()
       await this.saveOrder(true)
-      await this.saveOrderItems(true)
+      await this.saveOrderItems()
     })
 
-    return this.customer
+    return this.order
   }
 
   private async saveOrder (isUpdate = false) {
-    const { ...customerData } = this.data
+    const { ...orderData } = this.data
 
     const plainObject = {
-      name: customerData.name,
-      gender: customerData.gender,
-      birthDate: customerData.birthDate,
-      phoneNumber: customerData.phoneNumber
+      note: orderData.note,
+      amount: orderData.amount,
+      amountReceived: orderData.amountReceived
     }
 
-    if (this.user) {
-      Object.assign(plainObject, { user: this.user })
+    if (this.orderStatus) {
+      Object.assign(plainObject, { status: this.orderStatus })
     }
 
-    if (this.address) {
-      Object.assign(plainObject, { address: this.address })
+    if (this.payment) {
+      Object.assign(plainObject, { payment: this.payment })
+    }
+
+    if (this.professional) {
+      Object.assign(plainObject, { professional: this.professional })
+    }
+
+    if (this.customer) {
+      Object.assign(plainObject, { customer: this.customer })
+    }
+
+    if (this.cashier) {
+      Object.assign(plainObject, { cashier: this.cashier })
+    }
+
+    if (this.schedule) {
+      Object.assign(plainObject, { schedule: this.schedule })
     }
 
     if (isUpdate) {
-      Object.assign(plainObject, { id: this.customer.id })
+      Object.assign(plainObject, { id: this.order.id })
     }
 
-    const customer = this.transactionalEntityManager.create(Customer, plainObject)
+    const order = this.transactionalEntityManager.create(Order, plainObject)
 
-    await this.transactionalEntityManager.save(customer)
+    await this.transactionalEntityManager.save(order)
 
-    this.customer = customer
+    this.order = order
   }
 
-  private async saveOrderItems (isUpdate = false) {
-    const { ...customerData } = this.data
+  private async saveOrderItems () {
+    const { items } = this.data
 
-    const plainObject = {
-      name: customerData.name,
-      gender: customerData.gender,
-      birthDate: customerData.birthDate,
-      phoneNumber: customerData.phoneNumber
+    if (!items || !items.length) {
+      return
     }
 
-    if (this.user) {
-      Object.assign(plainObject, { user: this.user })
-    }
+    const savedOrderItems = await this.transactionalEntityManager.find(OrderItem, {
+      where: { orderId: this.order.id }
+    })
 
-    if (this.address) {
-      Object.assign(plainObject, { address: this.address })
-    }
+    await this.transactionalEntityManager.remove(savedOrderItems)
 
-    if (isUpdate) {
-      Object.assign(plainObject, { id: this.customer.id })
-    }
+    return Promise.all(items.map(async (item) => {
+      try {
+        const plainObject = {
+          name: item.name,
+          quantity: item.quantity,
+          price: item.price,
+          discount: item.discount,
+          isTip: item.isTip
+        }
 
-    const customer = this.transactionalEntityManager.create(Customer, plainObject)
+        if (item.serviceId) {
+          const service = await this.getService(item.serviceId)
+          Object.assign(plainObject, { service })
+        }
 
-    await this.transactionalEntityManager.save(customer)
+        if (item.productId) {
+          const product = await this.getProduct(item.productId)
+          Object.assign(plainObject, { product })
+        }
 
-    this.customer = customer
+        const orderItem = this.transactionalEntityManager.create(OrderItem, plainObject)
+        return this.transactionalEntityManager.save(orderItem)
+      } catch (err) {
+        console.error('Handle error on save order items', err.message)
+      }
+    }))
   }
 
-  private async retriveCustomer () {
-    const customer = await this.transactionalEntityManager
-      .createQueryBuilder(Customer, 'customer')
-      .innerJoinAndSelect('customer.businesses', 'business', 'business.businessId = :businessId', { businessId: this.business.id })
-      .where('customer.id = :id', { id: this.id })
-      .getOne()
+  private async getOrder () {
+    const order = await this.transactionalEntityManager.findOne(Order, {
+      where: { id: this.id, business: this.business }
+    })
 
-    if (!customer) {
-      throw new NotFoundException('Cliente não encontrado')
+    if (!order) {
+      throw new NotFoundException('Pedido não encontrado')
     }
 
-    this.customer = customer
+    this.order = order
   }
 
   private async getOrderStatus () {
@@ -147,9 +163,24 @@ export default class OrderService {
     this.orderStatus = orderStatus
   }
 
+  private async getOrderRelationships () {
+    await Promise.all([
+      this.getOrderStatus(),
+      this.getPayment(),
+      this.getCustomer(),
+      this.getProfessional(),
+      this.getCashier(),
+      this.getSchedule()
+    ])
+  }
+
   private async getPayment () {
-    const payment = await this.transactionalEntityManager
-      .findOne(Payment, this.data.paymentId)
+    const payment = await this.transactionalEntityManager.findOne(Payment, {
+      where: [
+        { id: this.data.paymentId, business: this.business },
+        { id: this.data.paymentId, preset: true }
+      ]
+    })
 
     if (!payment) {
       throw new NotFoundException('payment não encontrado')
@@ -170,13 +201,65 @@ export default class OrderService {
   }
 
   private async getProfessional () {
-    const professional = await this.transactionalEntityManager
-      .findOne(Professional, this.data.professionalId)
+    const professional = await this.transactionalEntityManager.findOne(Professional, {
+      where: { id: this.data.professionalId, business: this.business }
+    })
 
     if (!professional) {
       throw new NotFoundException('professional não encontrado')
     }
 
     this.professional = professional
+  }
+
+  private async getSchedule () {
+    const schedule = await this.transactionalEntityManager.findOne(Schedule, {
+      where: { id: this.data.scheduleId, business: this.business }
+    })
+
+    if (!schedule) {
+      throw new NotFoundException('agendamento não encontrado')
+    }
+
+    this.schedule = schedule
+  }
+
+  private async getCashier () {
+    const cashier = await this.transactionalEntityManager.findOne(Professional, {
+      where: { id: this.data.cashierId, business: this.business }
+    })
+
+    if (!cashier) {
+      throw new NotFoundException('profissional (caixa) não encontrado')
+    }
+
+    this.cashier = cashier
+  }
+
+  private async getService (id: string) {
+    const service = await this.transactionalEntityManager.findOne(Service, {
+      where: [
+        { id, business: this.business },
+        { id, preset: true }
+      ]
+    })
+
+    if (!service) {
+      throw new NotFoundException('serviço não encontrado')
+    }
+
+    return service
+  }
+
+  private async getProduct (id: number) {
+    const product = await this.transactionalEntityManager.findOne(Product, {
+      where: { id, business: this.business }
+    })
+
+    if (!product) {
+      throw new NotFoundException('produto não encontrado')
+    }
+
+    return product
   }
 }
