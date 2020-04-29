@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { getCustomRepository } from 'typeorm'
 import OrderRepository from '../repositories/OrderRepository'
+import OrderStatusRepository from '../repositories/OrderStatusRepository'
 import NotFoundException from '../exceptions/NotFoundException'
 import OrderService from '../services/OrderService'
 
@@ -55,5 +56,14 @@ export default class OrderController {
 
     await orderRepository.remove(order)
     return res.status(204).send()
+  }
+
+  public async status (req: Request, res: Response) {
+    const orderStatusRepository = getCustomRepository(OrderStatusRepository)
+    const orderStatus = await orderStatusRepository.paginate(req.query.page, req.query.limit, {
+      order: { name: 'ASC' }
+    })
+
+    return res.json(orderStatus)
   }
 }

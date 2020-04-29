@@ -2,10 +2,14 @@ import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryColumn } fro
 
 @Entity()
 export default class UserGroupHasUserResource {
-  @PrimaryColumn()
+  @PrimaryColumn({
+    name: 'user_group_id'
+  })
   public userGroupId: number
 
-  @PrimaryColumn()
+  @PrimaryColumn({
+    name: 'user_resource_id'
+  })
   public userResourceId: number
 
   @Column('boolean')
@@ -14,9 +18,13 @@ export default class UserGroupHasUserResource {
   @Column('boolean')
   public write?: boolean
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    name: 'created_at'
+  })
   public createdAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    name: 'updated_at'
+  })
   public updatedAt: Date
 }

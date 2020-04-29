@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "compile": "tsc",
+    "configure": "cp .env.example .env",
     "dev": "nodemon",
     "lint": "eslint --fix --ext .ts src",
     "migrate": "ts-node ./node_modules/typeorm/cli.js migration:run",

@@ -2,15 +2,23 @@ import { Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } fr
 
 @Entity()
 export default class BusinessHasCustomer {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('uuid', {
+    name: 'business_id'
+  })
   public businessId: string
 
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('uuid', {
+    name: 'customer_id'
+  })
   public customerId: string
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    name: 'created_at'
+  })
   public createdAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    name: 'updated_at'
+  })
   public updatedAt: Date
 }

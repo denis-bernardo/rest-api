@@ -8,16 +8,26 @@ export default class Register {
   @PrimaryGeneratedColumn()
   public id: number
 
-  @Column('datetime')
+  @Column({
+    type: 'datetime',
+    name: 'opened_at'
+  })
   public openedAt: Date
 
-  @Column('datetime')
+  @Column({
+    type: 'datetime',
+    name: 'closed_at'
+  })
   public closedAt?: Date
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    name: 'created_at'
+  })
   public createdAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    name: 'updated_at'
+  })
   public updatedAt: Date
 
   @ManyToOne(() => User, (user) => user.registers)

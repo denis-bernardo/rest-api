@@ -18,12 +18,14 @@ export default class Customer {
 
   @Column({
     type: 'varchar',
-    length: 11
+    length: 11,
+    name: 'phone_number'
   })
   public phoneNumber?: string
 
   @Column({
-    type: 'date'
+    type: 'date',
+    name: 'birth_date'
   })
   public birthDate?: Date
 
@@ -33,10 +35,14 @@ export default class Customer {
   })
   public gender?: string
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    name: 'created_at'
+  })
   public createdAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    name: 'updated_at'
+  })
   public updatedAt: Date
 
   @ManyToOne(() => Address, (address) => address.customers)

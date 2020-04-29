@@ -64,7 +64,7 @@ class SetupValidator {
         name: Joi.string().required(),
         nickname: Joi.string().allow('').optional(),
         user: Joi.object({
-          cognitoUserSub: Joi.string().email().required(),
+          cognitoUserSub: Joi.string().required(),
           userGroupId: Joi.number().required()
         }).required(),
         hours: Joi.array().items(Joi.object({
