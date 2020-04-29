@@ -33,13 +33,20 @@ export default class OrderItem {
   })
   public discount?: number
 
-  @Column('boolean')
+  @Column({
+    type: 'boolean',
+    name: 'is_tip'
+  })
   public isTip?: boolean
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    name: 'created_at'
+  })
   public createdAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    name: 'updated_at'
+  })
   public updatedAt: Date
 
   @ManyToOne(() => Order, (order) => order.items)

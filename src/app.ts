@@ -5,8 +5,6 @@ import * as express from 'express'
 import { createConnection } from 'typeorm'
 import routes from './routes'
 import errorMiddleware from './middlewares/errorMiddleware'
-import identityMiddleware from './middlewares/identityMiddleware'
-import authMiddleware from './middlewares/authMiddleware'
 
 class Application {
   public express: express.Application;
@@ -32,8 +30,6 @@ class Application {
     this.express.use(cors())
     this.express.use(bodyParser.json())
     this.express.use(bodyParser.urlencoded({ extended: true }))
-    this.express.use(authMiddleware)
-    this.express.use(identityMiddleware)
   }
 
   private async database () {

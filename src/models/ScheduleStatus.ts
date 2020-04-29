@@ -12,10 +12,14 @@ export default class ScheduleStatus {
   })
   public name: string
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    name: 'created_at'
+  })
   public createdAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    name: 'updated_at'
+  })
   public updatedAt: Date
 
   @OneToMany(() => Schedule, schedule => schedule.status)

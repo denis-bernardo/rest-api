@@ -2,10 +2,14 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
 
 @Entity()
 export default class ScheduleHasService {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('uuid', {
+    name: 'schedule_id'
+  })
   public scheduleId: string
 
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('uuid', {
+    name: 'service_id'
+  })
   public serviceId: string
 
   @Column({

@@ -5,12 +5,17 @@ import ProductCategoryController from '../controllers/ProductCategoryController'
 import ProductBrandController from '../controllers/ProductBrandController'
 import productValidator from '../validations/validators/ProductValidator'
 import validate from '../middlewares/validationMiddleware'
+import authMiddleware from '../middlewares/authMiddleware'
+import identityMiddleware from '../middlewares/identityMiddleware'
 
 const productController = new ProductController()
 const productCategoryController = new ProductCategoryController()
 const productBrandController = new ProductBrandController()
 
 const router = Router()
+
+router.use(authMiddleware)
+router.use(identityMiddleware)
 
 router.get('/category', asyncFn(productCategoryController.list.bind(productCategoryController)))
 router.post('/category', validate(productValidator.validateCategory()),

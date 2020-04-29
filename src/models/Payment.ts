@@ -18,10 +18,14 @@ export default class Payment {
   @Column('boolean')
   public preset?: boolean
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    name: 'created_at'
+  })
   public createdAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    name: 'updated_at'
+  })
   public updatedAt: Date
 
   @ManyToOne(() => Business, (business) => business.payments)

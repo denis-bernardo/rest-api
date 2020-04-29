@@ -28,17 +28,25 @@ export default class Order {
   @Column({
     type: 'decimal',
     precision: 10,
-    scale: 2
+    scale: 2,
+    name: 'amount_received'
   })
   public amountReceived?: number
 
-  @Column('datetime')
+  @Column({
+    type: 'datetime',
+    name: 'paid_at'
+  })
   public paidAt?: Date
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    name: 'created_at'
+  })
   public createdAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    name: 'updated_at'
+  })
   public updatedAt: Date
 
   @ManyToOne(() => OrderStatus, (orderStatus) => orderStatus.orders)

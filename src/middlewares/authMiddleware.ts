@@ -65,7 +65,6 @@ const authMiddleware = asyncFn(async (req: Request, res: Response, next: NextFun
   try {
     const response = await validateToken(token)
     req.user = response
-    console.log(req.user)
     next()
   } catch (err) {
     console.error(err)

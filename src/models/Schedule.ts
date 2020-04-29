@@ -11,22 +11,26 @@ export default class Schedule {
   public id: string
 
   @Column({
-    type: 'date'
+    type: 'date',
+    name: 'scheduled_to'
   })
   public scheduledTo: Date
 
   @Column({
-    type: 'int'
+    type: 'int',
+    name: 'week_day'
   })
   public weekDay: number
 
   @Column({
-    type: 'time'
+    type: 'time',
+    name: 'start_at'
   })
   public startAt: number
 
   @Column({
-    type: 'time'
+    type: 'time',
+    name: 'end_at'
   })
   public endAt: number
 
@@ -37,14 +41,19 @@ export default class Schedule {
   public note?: string
 
   @Column({
-    type: 'datetime'
+    type: 'datetime',
+    name: 'confirmed_at'
   })
   public confirmedAt?: Date
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    name: 'created_at'
+  })
   public createdAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    name: 'updated_at'
+  })
   public updatedAt: Date
 
   @ManyToOne(() => Professional, (professional) => professional.schedules)

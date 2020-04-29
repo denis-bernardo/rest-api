@@ -61,7 +61,8 @@ export default class OrderService {
     const plainObject = {
       note: orderData.note,
       amount: orderData.amount,
-      amountReceived: orderData.amountReceived
+      amountReceived: orderData.amountReceived,
+      business: this.business
     }
 
     if (this.orderStatus) {
@@ -119,7 +120,8 @@ export default class OrderService {
           quantity: item.quantity,
           price: item.price,
           discount: item.discount,
-          isTip: item.isTip
+          isTip: item.isTip,
+          order: this.order
         }
 
         if (item.serviceId) {
@@ -175,6 +177,10 @@ export default class OrderService {
   }
 
   private async getPayment () {
+    if (!this.data.paymentId) {
+      return
+    }
+
     const payment = await this.transactionalEntityManager.findOne(Payment, {
       where: [
         { id: this.data.paymentId, business: this.business },
@@ -190,6 +196,10 @@ export default class OrderService {
   }
 
   private async getCustomer () {
+    if (!this.data.customerId) {
+      return
+    }
+
     const customer = await this.transactionalEntityManager
       .findOne(Customer, this.data.customerId)
 
@@ -201,6 +211,10 @@ export default class OrderService {
   }
 
   private async getProfessional () {
+    if (!this.data.professionalId) {
+      return
+    }
+
     const professional = await this.transactionalEntityManager.findOne(Professional, {
       where: { id: this.data.professionalId, business: this.business }
     })
@@ -213,6 +227,10 @@ export default class OrderService {
   }
 
   private async getSchedule () {
+    if (!this.data.scheduleId) {
+      return
+    }
+
     const schedule = await this.transactionalEntityManager.findOne(Schedule, {
       where: { id: this.data.scheduleId, business: this.business }
     })
@@ -225,6 +243,10 @@ export default class OrderService {
   }
 
   private async getCashier () {
+    if (!this.data.cashierId) {
+      return
+    }
+
     const cashier = await this.transactionalEntityManager.findOne(Professional, {
       where: { id: this.data.cashierId, business: this.business }
     })
