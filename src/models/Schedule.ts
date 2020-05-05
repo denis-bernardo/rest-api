@@ -1,9 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany, ManyToMany, JoinTable } from 'typeorm'
 import Business from './Business'
 import Professional from './Professional'
 import Customer from './Customer'
 import ScheduleStatus from './ScheduleStatus'
 import Order from './Order'
+import Service from './Service'
 
 @Entity()
 export default class Schedule {
@@ -26,13 +27,13 @@ export default class Schedule {
     type: 'time',
     name: 'start_at'
   })
-  public startAt: number
+  public startAt: string
 
   @Column({
     type: 'time',
     name: 'end_at'
   })
-  public endAt: number
+  public endAt: string
 
   @Column({
     type: 'varchar',
@@ -45,6 +46,11 @@ export default class Schedule {
     name: 'confirmed_at'
   })
   public confirmedAt?: Date
+
+  @Column({
+    type: 'boolean'
+  })
+  public block?: boolean
 
   @CreateDateColumn({
     name: 'created_at'
@@ -72,6 +78,18 @@ export default class Schedule {
   @JoinColumn({ name: 'schedule_status_id' })
   public status: ScheduleStatus
 
-  @OneToMany(() => Order, order => order.schedule)
+  @OneToMany(() => Order, order => order.schedule, { cascade: true })
   public orders: Order[]
+
+  @ManyToMany(() => Service, service => service.schedules, { cascade: true })
+  @JoinTable({
+    name: 'schedule_has_service',
+    joinColumn: {
+      name: 'schedule_id'
+    },
+    inverseJoinColumn: {
+      name: 'service_id'
+    }
+  })
+  public services: Service[]
 }

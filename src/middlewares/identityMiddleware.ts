@@ -6,7 +6,10 @@ import asyncFn from './asyncMiddleware'
 
 const identityMiddleware = asyncFn(async (req: Request, res: Response, next: NextFunction) => {
   const businessRepository = getCustomRepository(BusinessRepository)
-  const business = await businessRepository.findOne({ where: { id: req.user.business } })
+  const business = await businessRepository.findOne({
+    where: { id: req.user.business },
+    relations: ['businessHours']
+  })
 
   if (!business) {
     throw new NotFoundException('business não encontrado')
