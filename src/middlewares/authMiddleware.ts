@@ -60,20 +60,11 @@ const validateToken = (token: string) => {
 }
 
 const authMiddleware = asyncFn(async (req: Request, res: Response, next: NextFunction) => {
-  // const token = getTokenFromRequest(req)
+  const token = getTokenFromRequest(req)
 
   try {
-    // const response = await validateToken(token)
-    // req.user = response
-    req.user = {
-      id: '2096d428-4566-4d80-8cd6-dc077b21daa8',
-      email: 'oi@denisbernardo21222222s2ss2s3y.com',
-      business: 'e0c831c8-1415-4c23-938d-ef002dac0a93',
-      businesses: ['e0c831c8-1415-4c23-938d-ef002dac0a93'],
-      permissions: {},
-      professionalId: 'f2c102fa-ee7f-490a-adfe-b4f12dce2d02',
-      isAdmin: true
-    }
+    const response = await validateToken(token)
+    req.user = response
     next()
   } catch (err) {
     console.error(err)
