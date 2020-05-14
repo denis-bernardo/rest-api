@@ -442,6 +442,7 @@ ENGINE = InnoDB;`)
   \`created_at\` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   \`updated_at\` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   \`confirmed_at\` DATETIME NULL,
+  \`block\` TINYINT(1) NULL DEFAULT 0,
   \`professional_id\` VARCHAR(36) NOT NULL,
   \`customer_id\` VARCHAR(36) NOT NULL,
   \`business_id\` VARCHAR(36) NOT NULL,

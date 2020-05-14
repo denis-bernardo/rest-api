@@ -4,6 +4,7 @@ import ServiceCategory from './ServiceCategory'
 import OrderItem from './OrderItem'
 import ServiceDetail from './ServiceDetail'
 import Professional from './Professional'
+import Schedule from './Schedule'
 
 @Entity()
 export default class Service {
@@ -45,4 +46,7 @@ export default class Service {
 
   @ManyToMany(() => Professional, professional => professional.services)
   public professionals: Professional[]
+
+  @ManyToMany(() => Schedule, schedule => schedule.services)
+  public schedules: Schedule[]
 }

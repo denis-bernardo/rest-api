@@ -77,6 +77,6 @@ export default class Order {
   @JoinColumn({ name: 'schedule_id' })
   public schedule: Schedule
 
-  @OneToMany(() => OrderItem, orderItem => orderItem.order)
+  @OneToMany(() => OrderItem, orderItem => orderItem.order, { cascade: true })
   public items: OrderItem[]
 }
